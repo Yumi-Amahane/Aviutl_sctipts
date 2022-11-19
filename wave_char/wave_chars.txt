@@ -1,0 +1,30 @@
+<?
+--(c)yumi-amahane
+text="もじのうぇ～ぶ";
+
+diff=10;
+w=10;--文字と文字の間隔
+maxheight=200;
+sig2=80;
+
+yd=0
+for i=0, #text-1,2 do
+  x=i*150/2;
+  
+  mu=diff*(i/2+3)
+  t=obj.frame;
+  --正規分布でy位置を決定
+  y=-1*math.floor(math.exp(-1*(t-mu)*(t-mu)/(2*sig2))*maxheight);
+  char=string.sub(text,i+1,i+2)
+
+  --xとyの片方が負値だと変に相対座標になってしまうので、相対座標を計算して出力
+  if (y-yd<0) then
+    obj.mes("<p+"..w..","..y-yd..">"..char);
+  else
+    obj.mes("<p+"..w..",+"..y-yd..">"..char);
+  end
+  --次の計算に使うための座標の記憶
+  yd=y;
+ 
+end
+?>
