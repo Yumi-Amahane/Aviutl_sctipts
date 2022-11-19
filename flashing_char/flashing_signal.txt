@@ -1,0 +1,59 @@
+<?
+--(c)yumi-amahane
+text="色変え点滅";
+lf=32;
+nc={0,0,0};
+xc={255,255,255};
+rgbs={{255,0,10},{10,10,255},{255,255,0}};
+
+t=obj.frame%lf;
+C={0,0,0};
+
+function colortoHex(RGB)
+R="#";
+for i=1,3 do
+if (RGB[i]<16) then
+R=R.."0";
+end
+R=R..string.format("%x",RGB[i]);
+end
+return R;
+end
+
+function calca(before,after)
+ras={0,0,0};
+for i=1,3 do
+ras[i]=(after[i]-before[i])/(lf/4);
+end
+return (ras);
+end
+
+function calcC(as,t,s)
+RC={0,0,0};
+for i=1,3 do
+RC[i]=as[i]*t+s[i];
+end
+return RC;
+end
+
+if t<lf/4 then
+if t==0 then dr=r;while(dr==r)do r=math.random(#rgbs);end end
+as=calca(nc,rgbs[r]);
+C=calcC(as,t,nc);
+end
+if lf/4<=t and t<lf/2 then
+as=calca(rgbs[r],xc);
+C=calcC(as,t-lf/4,rgbs[r]);
+end
+if lf/2<=t and t<lf*3/4 then
+if lf/2==t then  dr=r;while(dr==r)do r=math.random(#rgbs);end end
+as=calca(xc,rgbs[r]);
+C=calcC(as,t-lf/2,xc);
+end
+if lf*3/4<=t then
+as=calca(rgbs[r],nc);
+C=calcC(as,(t-lf*3/4),rgbs[r]);
+end
+
+mes("<"..colortoHex(C)..">"..text);
+?>
