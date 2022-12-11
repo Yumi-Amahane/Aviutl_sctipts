@@ -1,0 +1,33 @@
+<?
+--(c)yumi-amahane
+text="らっかもじ";
+
+g=0.5
+frm_bound=30
+const_ref=0.8
+sy=-100
+diff=10;
+w=10;--文字と文字の間隔
+
+dy=0
+for i=0, #text-1,2 do
+  char=string.sub(text,i+1,i+2)
+  x=i*150/2;
+  t=obj.frame-diff*i
+  if (t<0)then
+    t=0
+  end
+  
+  if (t<frm_bound)then
+    y=sy+0.5*g*t^2
+  else
+    y=sy+0.5*g*frm_bound^2-const_ref*(g*frm_bound*(t-frm_bound))+0.5*g*(t-frm_bound)^2
+  end
+  if (y-dy<0)then
+    obj.mes("<p+"..w..","..y-dy..">"..char)
+  else
+    obj.mes("<p+"..w..",+"..y-dy..">"..char)
+  end
+  dy=y
+end
+?>
